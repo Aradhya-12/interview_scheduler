@@ -10,7 +10,7 @@ const ViewInterview = () => {
 
     useEffect(async()=>{
         try{
-            const AxiosInstance= await axios.create({baseURL: interviews});
+            const AxiosInstance= axios.create({baseURL: interviews});
             const interviewsList= await AxiosInstance.get();
             setLoading(false)
             loadItems(interviewsList.data)

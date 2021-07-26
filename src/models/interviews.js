@@ -17,4 +17,4 @@ const interviewSchema= new mongoose.Schema({
 })
 const interview= mongoose.model('interview',interviewSchema)
 
-module.exports=interview
+module.exports= interview

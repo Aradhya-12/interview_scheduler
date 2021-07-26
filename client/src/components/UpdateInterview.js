@@ -30,7 +30,7 @@ const UpdateInterview = () => {
     },[boolUpdate])
 
     const checkEditState = (item) =>{
-        return (Edit!=item)
+        return (Edit!==item)
     }
 
     const checkUser =(email) =>{
@@ -84,10 +84,8 @@ const UpdateInterview = () => {
     }
     const deleteCall = async() =>{
         try{
-            let request = {
-                interviewId:Edit._id
-            }
-            const response= await axios.delete(deleteInterview,request)
+            
+            const response= await axios.delete(deleteInterview+'?id='+encodeURIComponent(Edit._id))
             const dummy= !boolUpdate
             setUpdate(dummy)
             alert('Interview was successfully deleted');

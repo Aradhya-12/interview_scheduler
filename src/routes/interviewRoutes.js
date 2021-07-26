@@ -9,24 +9,22 @@ const checkUpdates= require('../middleware/checkUpdates.js')
 
 router.post('/' ,check ,async(req, res)=>{
     try{
-     email=[]
-    
-    req.body.user.forEach((users)=>{
-        email.push(users.email)
-    })
+        email=[]
+        req.body.user.forEach((users)=>{
+            email.push(users.email)
+        })
 
-    //creating new interview
-    const newInterview= new interview({
-        email:email,
-        startTime:req.body.startTime,
-        endTime:req.body.endTime
-    })
-    console.log(newInterview)
-    await newInterview.save()
+        //creating new interview
+        const newInterview= new interview({
+            email: email,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime
+        })
+        await newInterview.save()
 
-    // adding the interview's data in each user present in the created interview
-    // sending mails to users of new interview
-        req.body.user.forEach(async (users)=>{
+        // adding the interview's data in each user present in the created interview
+        // sending mails to users of new interview
+         req.body.user.forEach(async (users)=>{
          const USER= await User.findById(users._id)
          mailSend.sendNotificationMail(users.email, users.name, req.body.startTime, req.body.endTime)
          USER.interviews.push(newInterview._id)
@@ -56,8 +54,8 @@ router.patch('/update',checkUpdates, async(req, res)=>{
         const currInterview= await interview.findById(req.body.interviewId)
          email=[]
         //sending updateMail to the users in the updated interview
-            req.body.user.forEach((newUser)=>{
-                email.push(newUser.email)
+        req.body.user.forEach((newUser)=>{
+            email.push(newUser.email)
         })
 
         //updating the given interview's data
@@ -71,8 +69,7 @@ router.patch('/update',checkUpdates, async(req, res)=>{
         //updating interviews's list of newly added users 
         req.body.user.forEach(async (users)=>{
             const USER= await User.findById(users._id)
-            if(!(USER.interviews.includes(req.body.interviewId)))
-            {
+            if(!(USER.interviews.includes(req.body.interviewId))){
                 await USER.interviews.push(req.body.interviewId)
                 await USER.save()
             }
@@ -100,20 +97,24 @@ router.patch('/update',checkUpdates, async(req, res)=>{
 router.delete('/delete', async(req, res)=>{
     try{
         //update interviewsarray of users who are present in interview that is to be deleted
-        const currInterview= await interview.findOne(req.body.interviewId)
-        if(currInterview.email.length!=0){
-            for(oldEmail of currInterview.email){
-                const oldUser= await User.findOne({email:oldEmail})
-                const index = oldUser.interviews.indexOf(req.body.interviewId)
-                if (index > -1) {
-                    oldUser.interviews.splice(index, 1);
+        const interviewId = req.query.id
+        const oldlist= await User.find({})
+
+        for(old of oldlist){
+            const oldUser= await User.findById(old._id)
+            var listOfInterviews = []
+            for(interviewOld of oldUser.interviews){
+                if(interviewOld != interviewId){
+                    listOfInterviews.push(interviewOld)
                 }
-                await oldUser.save()
             }
+            oldUser.interviews=[]
+            oldUser.interviews = [...listOfInterviews];
+            await oldUser.save()
         }
 
         //deleting the interview
-        await interview.findOneAndDelete(req.body.interviewId)
+        await interview.findOneAndDelete({_id: interviewId})
         res.send('Interview deleted successfully')
     }
     catch(e){

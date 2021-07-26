@@ -16,8 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // assinging the users and tasks router to our express app
-app.use('/users',userRouter)
-app.use('/interviews',interviewRouter)
+app.use('/users', userRouter)
+app.use('/interviews', interviewRouter)
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("*", (req, res) => {

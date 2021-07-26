@@ -1,9 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import Interview from './interview.js';
-import {users,interviews,updateInterview,deleteInterview, createInt} from '../utilites/url';
+import {users, createInt} from '../utilites/url';
 import axios from 'axios';
 import {Button} from '@material-ui/core';
-import { brown } from '@material-ui/core/colors';
 import DateTimePicker from 'react-datetime-picker'
 
 const CreateInterview = () => {

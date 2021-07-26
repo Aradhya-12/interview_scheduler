@@ -3,7 +3,7 @@ const User= require('../models/user.js')
 
 const check= async(req, res, next)=>{
     if(req.body.user.length<2){
-        return res.status(404).send({error:"Must have atleast two users"})
+        return res.status(404).send({error: "Must have atleast two users"})
     }
     const users= req.body.user
     const startTime= req.body.startTime
@@ -18,10 +18,9 @@ const check= async(req, res, next)=>{
         const  user_check= await User.findOne({_id: user._id})
         for(item of user_check.interviews){
             const Interview= await interview.findOne({_id: item})
-            if(!(Interview.endTime<startTime || Interview.startTime>endTime))
-            return res.status(404).send({error:"User "+ user_check.email + " is not free in the given slot!" })
+            if(!(Interview?.endTime <= startTime || Interview?.startTime >= endTime))
+            return res.status(404).send({error: "User "+ user_check.email + " is not free in the given slot!" })
         }
-
     }
     next()
 }
