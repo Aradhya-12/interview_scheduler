@@ -102,14 +102,14 @@ router.delete('/delete', async(req, res)=>{
         //update interviewsarray of users who are present in interview that is to be deleted
         const currInterview= await interview.findOne(req.body.interviewId)
         if(currInterview.email.length!=0){
-        currInterview.email.forEach(async (oldEmail)=>{
+            for(oldEmail of currInterview.email){
                 const oldUser= await User.findOne({email:oldEmail})
                 const index = oldUser.interviews.indexOf(req.body.interviewId)
                 if (index > -1) {
                     oldUser.interviews.splice(index, 1);
                 }
                 await oldUser.save()
-            })
+            }
         }
 
         //deleting the interview
