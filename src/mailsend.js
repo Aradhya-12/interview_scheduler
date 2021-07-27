@@ -15,7 +15,7 @@ const sendNotificationMail =  function(email, name, startTime, endTime) {
         from: 'limitedmedicare@gmail.com',
         to: email,
         subject: 'Notification of the scheduled interview',
-        text: 'Hello ' + name +'! This is to inform you that an interview is scheduled from the scaler academy at ' + (new Date(parseInt(startTime))).toLocaleTimeString() + '-' + (new Date(parseInt(endTime))).toLocaleTimeString() + ' on ' + (new Date(parseInt(startTime))).toDateString('en-IN') +'.'
+        text: 'Hello ' + name +'! This is to inform you that an interview is scheduled from the scaler academy at ' + (new Date(parseInt(startTime))).toLocaleTimeString('en-IN') + '-' + (new Date(parseInt(endTime))).toLocaleTimeString('en-IN') + ' on ' + (new Date(parseInt(startTime))).toDateString('en-IN') +'.'
       }
     transporter.sendMail(mailOptions, function(error, info){
   if (error) {
@@ -30,7 +30,7 @@ const sendUpdateMail =  function(email, name, startTime, endTime) {
         from: 'limitedmedicare@gmail.com',
         to: email,
         subject: 'Notification of the update in scheduled interview',
-        text: 'Hello ' + name +'! This is to inform you that an interview is scheduled from the scaler academy with updated time of ' + (new Date(parseInt(startTime))).toLocaleTimeString() + '-' + (new Date(parseInt(endTime))).toLocaleTimeString() + ' on ' + (new Date(parseInt(startTime))).toDateString('en-IN') +'.'
+        text: 'Hello ' + name +'! This is to inform you that an interview is scheduled from the scaler academy with updated time of ' + (new Date(parseInt(startTime))).toLocaleTimeString('en-IN') + '-' + (new Date(parseInt(endTime))).toLocaleTimeString('en-IN') + ' on ' + (new Date(parseInt(startTime))).toDateString('en-IN') +'.'
       }
     transporter.sendMail(mailOptions, function(error, info){
   if (error) {

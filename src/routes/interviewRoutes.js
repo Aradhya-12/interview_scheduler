@@ -122,5 +122,24 @@ router.delete('/delete', async(req, res)=>{
         console.log(e)
     }
 })
+router.get('/meeting/:id/:emails', async(req, res) =>{
+    try{
+        const interviewid= req.params.id
+        const emailList= req.params.emails
+        
+        const currInterview = await interview.findById(interviewid)
+
+        for(item of currInterview.email ){
+            if(item == emailList)
+           return res.send('interview found')
+            
+        }
+        return res.send({error : "email not found"})
+    }
+    catch(e){
+        res.status(404).send({error: "id not found"})
+    }
+    
+})
 
 module.exports= router
