@@ -16,7 +16,7 @@ const checkUpdates= async(req, res, next)=>{
     return res.status(404).send({error: "Start time must be before end time"})
     if(new Date(parseInt(startTime)).toLocaleDateString() < current_date )
     return res.status(404).send({error: "Time has already past"})
-    if ((new Date(parseInt(startTime)).toLocaleDateString() >= current_date) && (new Date(parseInt(startTime)).toLocaleTimeString('en-IN') < current_time))
+    if ((new Date(parseInt(startTime)).toLocaleDateString() == current_date) && (new Date(parseInt(startTime)).toLocaleTimeString('en-IN') < current_time))
     return res.status(404).send({error: "Time has already past"})
 
     //checking selected users' availibility for scheduled interview
